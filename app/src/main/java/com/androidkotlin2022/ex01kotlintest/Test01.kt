@@ -21,6 +21,8 @@ fun main(){
     // 변수명을 전달하면 변수안에 값이 출력됨
     var a:Int=10
     println( a )
+    var b:String="Hello"
+    println(b)
 
 
 }
