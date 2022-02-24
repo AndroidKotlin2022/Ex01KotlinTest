@@ -38,6 +38,9 @@ fun main(){
     println(num2)
 
     // 2.2 val [ 값 변경이 불가능한 변수 - 읽기전용 변수 ]  ## 상수와는 조금 다른 개념임 - 상수는 const 키워드 사용 ##
+    val num3:Int= 100
+    //num3=200 //error
+    println(num3)
 
 
 
