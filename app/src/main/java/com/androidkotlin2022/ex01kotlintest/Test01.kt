@@ -42,6 +42,9 @@ fun main(){
     //num3=200 //error
     println(num3)
 
+    val c:Boolean= true
+    println(c)
+
 
 
 
