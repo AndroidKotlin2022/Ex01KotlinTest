@@ -56,6 +56,10 @@ fun main(){
     var cc="Hello" //String
     println(cc)
 
+    // null 값 저장하기 - Nullable variable
+    var aaa:String?= null
+    println(aaa)
+
 
 
 }
