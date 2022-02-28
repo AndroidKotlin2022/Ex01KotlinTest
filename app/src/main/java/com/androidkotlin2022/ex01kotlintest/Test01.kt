@@ -46,6 +46,15 @@ fun main(){
     println(c)
 
 
+    // 자료형을 생략하며 변수선언 - 자료형 자동 추론
+    var aa=10 //Int
+    println(aa)
+
+    var bb=3.14 //Double
+    println(bb)
+
+    var cc="Hello" //String
+    println(cc)
 
 
 
