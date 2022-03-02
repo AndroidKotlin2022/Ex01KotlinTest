@@ -46,6 +46,25 @@ fun main(){
     println(c)
 
 
+    // 자료형을 생략하며 변수선언 - 자료형 자동 추론
+    var aa=10 //Int
+    println(aa)
+
+    var bb=3.14 //Double
+    println(bb)
+
+    var cc="Hello" //String
+    println(cc)
+
+    // null 값 저장하기 - Nullable variable
+    var aaa:String?= null
+    println(aaa)
+
+    // null 변수의 멤버 사용하기
+    var bbb:String?= "Hello"
+    //println( bbb.length ) //error - null safety 연산자 필요
+    println( bbb?.length )
+
 
 
 
