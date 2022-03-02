@@ -60,6 +60,12 @@ fun main(){
     var aaa:String?= null
     println(aaa)
 
+    // null 변수의 멤버 사용하기
+    var bbb:String?= "Hello"
+    //println( bbb.length ) //error - null safety 연산자 필요
+    println( bbb?.length )
+
+
 
 
 }
