@@ -200,6 +200,74 @@ fun main(){
     // **************************************************************************************************
 
 
+    //3. 연산자 특이점.////////////////////////////////////////////////////////////////////////////////////
+    //숫자타입들간의 연산은 자동형변환이 수행됨[작은것->큰것]
+    println(10 + 3.14)
+
+    //숫자타입이 아닌 자료형과는 자동 형변환이 수행되지 않음.
+    //println(10 + true) //ERROR
+    //println(10 + 'A') //ERROR
+
+    println()
+    //자료형을 체크해주는 연산자 is
+    var n4 = 10
+    if (n4 is Int) {
+        println("n4변수는 Int타입 입니다.")
+    }
+
+    var s3: String = "Hello"
+    if (s3 is String) println("s3변수는 String 타입입니다.")
+    //String 과 String? 는 같은 타입의 종류!!!
+    if (s3 is String?) println("s3변수는 String 타입입니다.")
+
+    // !is 도 있음.
+    if( s3 !is String) println("s3변수는 String 타입이 아닙니다.")
+
+    //다른 자료형은 is연산자로 체크하면 에러남
+    //if( n4 is String){ } //ERROR
+
+    //그럼 큰 의미는 없겠군요?? No............
+    //사실 is연산자는 Any타입에 대한 식별로 많이 사용됨
+    var obj:Any
+
+    obj= 10
+    //obj= 10.5
+    if(obj is Int) println( "${obj}는 Int입니다.")
+    if(obj is Double) println( "${obj}는 Doubl입니다.")
+
+
+    //자바의 instanceof같은 기능으로도 사용가능
+
+    open class Person{
+        //코틀린에서는 멤버변수를 속성[Property]라고 명명함.
+        //주의!! 프로퍼티는 반드시 초기화가 되어 있어야 함.
+        var name:String = "sam"
+        var age= 20
+    }
+
+
+    var p= Person()
+    if(p is Person){
+        println( p.name + "  " + p.age )
+        println( "이름 : ${p.name}    나이: ${p.age}")
+    }
+
+
+    // is의 특이한점. is로 특정 타입으로 확인되었다면 참인 영역안에서는 그 타입으로 인식됨.
+    //Any타입에 Person객체로 인식하여 사용하기
+    var obj2:Any
+    obj2= Person()
+    //obj2.name="aaa" //편집기에서 name변수의 존재를 알려주지 않음. [다만, 업캐스팅 되어 있다면 .연산자로 자식객체의 멤버를 강제로 명시하여 사용이 가능함(자동 형변환 - 권장하지 않음)]
+
+    if(obj2 is Person){  // is의 참 영역 안에서는 obj2가 Any타입이 아니라 Person타입의 참조변수인것으로 편집기가 인식함.
+        println( obj2.name + "  " + obj2.age )
+        println( "이름 : ${obj2.name}    나이: ${obj2.age}")
+    }
+
+    //obj2.name="aaa" //편집기에서 name변수의 존재를 알려주지 않음.
+    println()
+
+
 
 
 
