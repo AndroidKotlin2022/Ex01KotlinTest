@@ -269,6 +269,97 @@ fun main(){
 
 
 
+    //4. 제어문에서 특이한 점!!! //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // 코틀린의 제어문 종류 : if, when, while, for [ switch 문법이 없음 ]
+
+    //4.1. if와 삼항연산자의 결합
+    //var str= (10>5)? "Hello" : "Nice" //ERROR : 삼항연산자 문법이 없음
+    var str= if(10>5) "Hello" else "Nice"
+    println(str)
+
+    //혹시 if나 else문의 실행문이 여러줄이면 마지막 실행문이 변수에 대입됨
+    str= if(10>5){
+        "zzzzz"
+        "aaaaa"
+    }else{
+        "qqqqq"
+        println("ggggg") //당연히 이렇게 출력문 같은 코드가 있어도 됨.
+        "bbbbb"
+        //println("ggggg") //마지막이 있으면 당연히 에러 [ str의 자료형이 String이어서 에러임. Any였다면 에러 아님. 참고로 println()함수의 자료형은 Kotlin.Unit 타입임]
+    }
+    //이런 특징 때문에 if문을 코틀린에서는 제어문이라고 하지 않고 [if표현식]이라고 부름.
+    println(str)
+    println()
+
+
+    //4.2. switch 문법이 없어지고 when 문법이 이를 대체함
+    var h:Any?= null
+
+    //문법이 없어서 아예 에러
+    //switch(h){   }
+
+    h=10
+    when(h){
+        10-> println("aaa")
+        20-> println("bbb")
+        //자료형이 달라도 상관없음
+        "Hello"-> println("Hello")
+        true-> println("true")
+
+        //변수가 있어도 됨 (위에서 만들었던 n4변수가 10을 가지고 있음)
+        n4-> println("n4와 값이 같음")
+
+        //2개이상의 조건을 묶을 수 있음
+        30,40-> println("30 or 40 입니다.")
+
+        //switch문의 default역할 : 실행할 코드가 여러줄이면 {}로 묶어서...
+        else->{
+            println("ccc")
+            println("end")
+        }
+    }
+
+
+    //when도 if문처럼 표현식이라서 결과를 변수에 저장하는 것이 가능함
+    h=20
+    var result= when(h){
+        10->"Hello"
+        20->"Nice"
+        else->{
+            println("else")
+            "BAD"
+        }
+    }
+    println(result)
+
+
+    //when에 is키워드 사용도 가능함
+    when(h){
+        is Int -> println("Int 타입입니다.")
+        is String -> println("String 타입입니다.")
+        else -> println("else")
+    }
+    println()
+
+
+    // when을 특정 수식으로 제어하고 싶을 때 : when()에서 ()를 생략
+    h=85
+    when{
+        h>=90 && h<=1000-> println("A학점 입니다")
+        //h in 90..1000 -> println("A학점 입니다") - range 로 위 조건문을 변경할 수 있음. [range ... 문법은 반복문을 통해 소개]
+        h>=80 -> println("B학점 입니다.")
+        h>=70 -> println("C학점 입니다.")
+        h>=60 -> println("D학점 입니다.")
+        else -> println("F학점 낙제 입니다.")
+    }
+
+    //when에 in키워드 연산자를 통해 Collections의 요소들값을 체크할 수도 있음.
+    //이는 for문과 배열에 대한 소개후 수업해야함.
+
+
+
+
+
 
 
 }
