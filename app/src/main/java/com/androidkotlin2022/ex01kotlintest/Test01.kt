@@ -1,5 +1,7 @@
 package com.androidkotlin2022.ex01kotlintest
 
+import kotlin.reflect.typeOf
+
 //코틀린 언어 기초문법 [ 코틀린 연습 사이트 : https://try.kotlinlang.org/ ]
 
 //문법적 주요 특징!!
@@ -355,6 +357,72 @@ fun main(){
 
     //when에 in키워드 연산자를 통해 Collections의 요소들값을 체크할 수도 있음.
     //이는 for문과 배열에 대한 소개후 수업해야함.
+
+
+
+
+    //5. 반복문
+    // while문은 다른 것이 없음
+
+    // for문은 작성하는 방법이 완전히 다름
+    //for(var i=0; i<5; i++){} //ERROR - 이런 문법이 없음
+
+    // 0부터 5까지 6번 실행되는 반복문
+    for(i in 0..5){ //i변수 앞에 var쓰면 에러
+        println(i)
+    }
+    println()
+
+    //for안의 제어변수는 지역변수이기에 위에 사용했던 변수명을 사용해도 문제없음
+    for(a in 3   ..    10){ //..양옆의 공백은 상관없음  - 3~10
+        println(a)
+    }
+    println()
+
+    //마지막 숫자 전까지 .. 대신에 until
+    for(i in 0 until 10){ // 0 ~ 9
+        println(i)
+    }
+    println()
+
+    //2씩 증가 ( step )
+    for(i in 0..10 step 2){ //0,2,4,6,8,10
+        println(i)
+    }
+    println()
+
+    //값의 감소 ( downTo )
+    for(i in 10 downTo 0) println(i) //10,9,8,7,6,5,4,3,2,1,0
+    println()
+
+    //값의 2씩 감소 ( downTo + step )
+    for(i in 10 downTo 0 step 2) println(i) //10,8,6,4,2,0
+    println()
+
+
+    //for에 대한 또다른 점은 배열을 먼저 배우고...
+
+
+    //6. 배열 Array ///////////////////////////////////////////////////////////////////////////////////////
+    // 5.1 요소개수의 변경이 불가능한 배열 : Array
+    var arr= arrayOf(10,20,30)
+    //요소값 출력
+    println(arr[0])
+    println(arr[1])
+    println(arr[2])
+    //println(arr[3]) //Exception발생
+    println()
+
+    //값변경도 특별할 것 없음
+    arr[0]= 100
+    println(arr[0])
+    println()
+
+    //arr[3]= 40 //인덱스번호가 틀리면 Exception발생
+
+    // 5.2 요소개수의 변경이 가능한 유동적배열 : Collection [ List, Set, Map ]
+
+
 
 
 
