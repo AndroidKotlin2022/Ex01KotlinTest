@@ -1,5 +1,6 @@
 package com.androidkotlin2022.ex01kotlintest
 
+import android.util.Log
 import kotlin.reflect.typeOf
 
 //코틀린 언어 기초문법 [ 코틀린 연습 사이트 : https://try.kotlinlang.org/ ]
@@ -420,13 +421,86 @@ fun main(){
 
     //arr[3]= 40 //인덱스번호가 틀리면 Exception발생
 
+    //특이한 점은 코틀린의 모든 변수는 객체이므로 당연히 배열도 객체이며 모든 배열은 자동으로 get(), set() 함수와  size변수를 기본으로 가지고 있음
+    println(arr.get(0)) //마치 자바의 ArrayList 요소 값 얻어오기 처럼...사용가능
+    println(arr.get(1))
+    println(arr.get(2))
+    println()
+
+    arr.set(1, 200)
+    println(arr.get(0))
+    println(arr.get(1))
+    println(arr.get(2))
+    println()
+
+    //배열의 길이
+    println("배열의 길이 : ${arr.size}")
+    println()
+
+
+    //출력을 일일이 하는거 짜증나죠?
+    for(i in 0 until 3){   // 0..3쓰면 OutOfIndex Exception발생함
+        println(arr.get(i))
+    }
+    println()
+
+    //for문에 사용된 0..5는 사실 배열같은 것임. 즉, 6개짜리 배열을 놓은 것임.
+    //in키워드는 자바의 확장된 for문(foreach문) 같은 역할임
+    //다시말해 0..5자리에 배열이 놓여지고 i는 각 요소들의 차례로 대입되는 임시변수같은 것임
+
+    //배열요소값 for문으로 출력하기 (Java의 foreach문 같은 코드)
+    for(n in arr){ //n은 인덱스번호가 아님.... 주의!!!
+        println(n)
+    }
+    println()
+
+    //혹시 그럼에도 인덱스로 얻어오고 싶다면?? [ indices[인디시즈] : index의 복수형 ]
+    for(i in arr.indices){
+        println(i)
+    }
+    println()
+
+    //혹시 인덱스와 값을 동시에 가져오고 싶다면
+    for( (i, v) in arr.withIndex() ){
+        println( "[ $i ] : $v ")
+    }
+    println()
+
+    //함수형 프로그래밍 언어들의 배열처럼 요소값을 각각을 반복적으로 접근할때마다 {}의 코드가 실행되도록 하는 forEach 기능 있음.
+    // {}안에서는 생략된 변수 it 이 있으며.. it이 요소의 값을 가지고 있음. [ 배열요소의 자료형으로 자동 지정됨 ]
+    arr.forEach {
+        println(it)
+    }
+    println()
+
+    //arrayOf() 배열의 특이한 점.
+    //배열 각 요소의 자료형을 다르게 하면 각 요소의 타입은 read only Any 타입이 됨. [kotlin 이 버전업 되면서 - 2021년 상반기에는 값변경이 되었음]
+    var arr2= arrayOf(10, "Hello", true)
+
+    //값을 가져오는 것은 문제 없음
+    println(arr2[0])
+    println(arr2[1])
+    println(arr2[2])
+    println()
+
+    //각 요소의 값은 변경할 수 없음
+    arr2[0]= 20 //ERROR
+    arr2.set(1, "bbb") //ERROR
+
+    // 또한 요소의 타입이 저장된 값의 자료형으로 되어 있지 않기에 곧바로 연산에 사용 못함
+    //println( arr2[0] + 5 ) //ERROR
+    println( arr2[0] as Int + 5) //요소를 as 연산자로 변환해서 사용해야 함.
+    println( arr2[1] as String + "AAA")
+    println()
+
+
+    //그래서 보통 배열을 사용할때는 타입을 명시하여 같은 자료형만 저장함 [원래 배열의 특징]
+
+
+
+
+
     // 5.2 요소개수의 변경이 가능한 유동적배열 : Collection [ List, Set, Map ]
-
-
-
-
-
-
 
 
 
