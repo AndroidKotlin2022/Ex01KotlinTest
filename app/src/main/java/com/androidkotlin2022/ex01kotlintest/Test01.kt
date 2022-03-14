@@ -405,7 +405,7 @@ fun main(){
 
 
     //6. 배열 Array ///////////////////////////////////////////////////////////////////////////////////////
-    // 5.1 요소개수의 변경이 불가능한 배열 : Array
+    // 6.1 요소개수의 변경이 불가능한 배열 : Array
     var arr= arrayOf(10,20,30)
     //요소값 출력
     println(arr[0])
@@ -467,14 +467,14 @@ fun main(){
     println()
 
     //함수형 프로그래밍 언어들의 배열처럼 요소값을 각각을 반복적으로 접근할때마다 {}의 코드가 실행되도록 하는 forEach 기능 있음.
-    // {}안에서는 생략된 변수 it 이 있으며.. it이 요소의 값을 가지고 있음. [ 배열요소의 자료형으로 자동 지정됨 ]
+    // {}안에서는 생략된 변수 it 이 있으며.. it이 요소의 값을 가지고 있음. [ 배열요소의 자료형으로 자동 지정됨 ] - 추후에 고차함수에 대한 실습으로 {} 표기법에 대한 추가 소개예정
     arr.forEach {
         println(it)
     }
     println()
 
     //arrayOf() 배열의 특이한 점.
-    //배열 각 요소의 자료형을 다르게 하면 각 요소의 타입은 read only Any 타입이 됨. [kotlin 이 버전업 되면서 - 2021년 상반기에는 값변경이 되었음]
+    //배열 각 요소의 자료형을 다르게 하면 각 요소의 타입은 자동 Any타입이 됨.
     var arr2= arrayOf(10, "Hello", true)
 
     //값을 가져오는 것은 문제 없음
@@ -483,9 +483,9 @@ fun main(){
     println(arr2[2])
     println()
 
-    //각 요소의 값은 변경할 수 없음
-    arr2[0]= 20 //ERROR
-    arr2.set(1, "bbb") //ERROR
+    //각 요소의 값은 변경도 가능함.
+    arr2[0]= 20
+    arr2.set(1, "bbb")
 
     // 또한 요소의 타입이 저장된 값의 자료형으로 되어 있지 않기에 곧바로 연산에 사용 못함
     //println( arr2[0] + 5 ) //ERROR
@@ -495,12 +495,231 @@ fun main(){
 
 
     //그래서 보통 배열을 사용할때는 타입을 명시하여 같은 자료형만 저장함 [원래 배열의 특징]
+    //Type을 지정하여 배열을 만들 수 있음.
+    var arr3= arrayOf<Int>(10,20,30)
+
+    //<Int> 제네릭 표기법이 보기 싫다면 기본 타입 배열을 만들어주는 전용함수 이용
+    var arr4= intArrayOf(10,20,30)
+
+    //배열 참조변수만 먼저 만들고 나중에 배열객체 대입하려면 변수만들때 자료형을 표시
+    var arr5: IntArray
+    arr5= intArrayOf(1,2,3)
+
+    //## boolean부터 Double까지의 기초 자료형들만 xxxArrayOf()가 존재함.. StringArrayOf()는 없음
+
+    //배열의 요소값의 시작을 null값을 가진 배열 만들기 [길이:5]
+    val arr6= arrayOfNulls<Double>(5)
+    for(t in arr6){
+        println(t)
+    }
+    println()
+
+    //arr6 배열참조변수를 val 로 만들었기에 다른 배열객체로 변경하여 참조할 수 없음.
+    //arr6= arrayOfNulls<Double>(3) //error
+
+    // ** arrayOf()는 배열의 개수는 변경할 수 없음 ****************
+    // ==============================================================================================================================
+
+
+    // 6.2 자바의 Collection 과 같은 목적의 클래스들 : Collection [ List, Set, Map ]
+    // 1) List : 요소가 순서대로 저장됨. 인덱스번호가 자동부여. 중복데이터 허용
+    // 2) Set  : 요소가 순서대로 저장되어 있지 않음. 인덱스번호 없음. 중복데이터 불허
+    // 3) Map  : 요소가 순서대로 저장되어 있지 않음. [키,벨류]쌍으로 요소가 저장됨. 별도로 지정한 key로 요소를 식별함. 중복된 key는 불허, 중복데이터는 허용
+
+    // 코틀린의 Collection 들은 모두 요소의 추가/삭제 및 변경이 불가한 종류와 가능한 종류로 나뉘어져 있음.
+    // 6.2.1 요소개수의 추가/삭제 및 변경이 불가능한 컬렉션 : listOf(), setOf(), mapOf()
+    // 6.2.2 요소개수의 추가/삭제 및 변경이 가능한 mutable 컬렉션    : mutableListOf(), mutableSetOf(), mutableMapOf()
+
+    // 5.2.1 요소개수의 추가/삭제 및 변경이 불가능한 컬렉션 : listOf(), setOf(), mapOf()
+    //1) List
+    val list:List<Int> = listOf(10,20,30,20) //중복데이터[20] 허용
+    for( i in 0..2) {
+        println( list.get(i) )
+    }
+    println()
+
+    //값의 추가/삭제/변경에 관련된 기능메소드가 없음
+    //list.add(20) //error
+    //list.remove(0) //error
+    //list.set(1, 200) //error
+
+    //2) Set
+    val set:Set<Double> = setOf(3.14, 5.55, 2.22, 5.55, 1.56) //중복데이터[5.55]는 자동으로 저장안됨.
+    for( e in set) println(e)
+    println()
+
+    //3) Map
+    val map:Map<String, String> = mapOf( Pair("title","Hello"), Pair("msg","nice to meet you.") ); //Pair()객체를 이용하여 [키,벨류] 쌍으로 요소 추가
+    println("요소개수 : ${map.size}")
+    for ( (key, value) in map){
+        println("$key : $value")
+    }
+    println()
+
+    // Pair()객체 대신에 to 연산자 이용하여 키-벨류 지정
+    val map2:Map<String, String> = mapOf( "id" to "mrhi", "pw" to "1234" )
+    for( (k, v) in map) println( "$k : $v")
+    println()
+    //----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+    // 6.2.2 요소개수의 추가/삭제 및 변경이 가능한 mutable 컬렉션    : mutableListOf(), mutableSetOf(), mutableMapOf()
+    //1) MutableList
+    val aaaa:MutableList<Int> = mutableListOf(10,20,30)
+    println("요소개수 ${aaaa.size}")
+    aaaa.add(40)
+    aaaa.add(0,50) //특정 위치에 추가 가능
+    println("요소개수 ${aaaa.size}")
+    //aaaa.set(1,200) //아래 [] 인덱싱 방법을 권장함
+    aaaa[1] = 200
+    for( e in aaaa) println(e)
+    println()
+
+    //2) MutableSet
+    val bbbb:MutableSet<Double> = mutableSetOf<Double>()
+    println("요소개수 ${bbbb.size}")
+    bbbb.add(5.55)
+    bbbb.add(3.14)
+    bbbb.add(5.55) //중복데이터는 자동 무시
+    println("요소개수 ${bbbb.size}")
+    for( e in bbbb) println(e)
+    println()
+
+
+    //3) MutableMap
+    val cccc:MutableMap<String, String> = mutableMapOf("name" to "sam", Pair("tel", "01012345678"))
+    println("요소개수 ${cccc.size}")
+    cccc.put("addr", "seoul")
+    println("요소개수 ${cccc.size}")
+    for( (k,v) in cccc) println( "$k : $v")
+    println()
+
+    // *** 보통 개발자가 Collection 을 사용한다는 것은 유동적으로 요소값들을 제어하는 경우가 대부분이기에 특별한 사유가 없다면.
+    // mutableXxxOf()로 만드는 것을 추천. ********* /////////
+    //----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+    //6.2.3 별외. mutable이 익숙지 않다면.. 자바의 ArrayList, HashSet, HashMap 에 대응하는 클래스가 있음.
+    // Java의 ArrayList 같은 배열
+    val arrList:ArrayList<Any> = arrayListOf<Any>(10, "Hello", true)
+    for( e in arrList) println(e)
+    println()
+
+    //요소 추가 및 삭제
+    arrList.add(20)
+    arrList.add(3.14) //소수점 추가 불가 [ 원래 있던 자료형이 아닌 것이 추가되면 에러였으나 이제 가능함]
+    arrList.forEach { println(it) } //리스트객체의 forEach 기능사용하기 [한번 해보기]
+    println()
+
+    //특정 위치에 추가하기
+    arrList.add(0, "Nice")
+    for( e in arrList){
+        println(e)
+    }
+    println()
+
+    //인덱스번호로 지우기
+    arrList.removeAt(0)
+    for( e in arrList){
+        println(e)
+    }
+    println()
+
+    //요소값으로 지우기
+    arrList.remove(3.14)
+    for( e in arrList){
+        println(e)
+    }
+    println()
+
+
+    //요소개수나 set(), get()은 동일하게 존재함
+    println("요소개수 : ${arrList.size}")
+    //arrList.set(0,20) //코틀린은 set()보다는 아래처럼 []인덱싱을 이용하여 설정하는 방식을 권장함
+    arrList[0]=20
+    println("0번요소의 값 :  ${ arrList.get(0) }") //변수명이 아니라 함수를 호출하는 것도 가능함
+    //println("0번요소의 값 :  ${ arrList[0] }") //코틀린은 []인덱싱 방식을 권장함
+    println()
+
+
+    val hashSet: HashSet<Any> = hashSetOf(100, "Good", false)
+    hashSet.add(200)
+    hashSet.add("Good") //중복데이터 자동 무시
+    println("요소개수 : ${hashSet.size}")
+    for( e in hashSet) println(e)
+    println()
+
+    val hashMap: HashMap<String, String> = hashMapOf("apple" to "사과", Pair("house", "집"))
+    hashMap.put("car","자동차")
+    hashMap.put("car","차") //같은 key 를 사용하면 마지막 값으로 변경
+    for ( (k,v) in hashMap) println("$k : $v")
+    println()
+
+    // 자바에 익숙한 개발자라면 기존의 Collection 클래스로 만들어도 무방함. 그렇지 않다면 mutableXXX 로 사용하는 것을 권장함 (언어의 고유특징에 맞게 설계된 개발방법을 권장함)
+    // ==============================================================================================================================
+
+
+    //6.3 2차원 배열!!!!
+    val arrays= arrayOf( arrayOf(10,20,30),  arrayOf("aa", "bb"), arrayOf(true, false))
+    for( ar in arrays){
+        for( e in ar){
+            print(e)
+            print("   ")
+        }
+        println()
+    }
+    println()
+
+    val arrays2= mutableListOf<MutableList<Int>>( mutableListOf<Int>(10,20,30), mutableListOf<Int>(100,200,300,400) )
+    println("2차원배열 arrays2의 사이즈 : ${arrays2.size}")
+//    for( i in 0 until arrays2.size ){
+//    }
+//    or
+    for ( index in arrays2.indices ){
+        println(" arrays[$index] 리스트요소의 사이즈 : ${arrays2[index].size}  ")
+    }
+
+    arrays2.add(  mutableListOf(1000,2000) )
+    for( li in arrays2 ){
+        for( e in li){
+            print("$e, ")
+        }
+        println()
+    }
+    println()
+    // ==============================================================================================================================
+
+
+
+    //6.4 Null 값 저장을 무시하는 Collection : xxxOfNotNull - [String? : nullable 자료형은 추후 추가로 소개 : null을 저장할 수 있는 자료형]
+    val aaaaa:List<String?> = listOf(null, "nice")
+    for ( e in aaaaa ) println(e)
+    println()
+
+    val aaaaa2:List<String?> = listOfNotNull(null, "aaa") //null값 저장이 자동으로 무시됨
+    for( e in aaaaa2) println(e)
+    println()
+
+    val bbbbb: Set<String?> = setOfNotNull(null,"good"); //null 무시
+    for( e in bbbbb) println(e)
+    println()
+
+    // map 방식은 NotNull 관련 함수가 없음.
+    //val ccccc: Set<String?> = mapOfNotNull(); //존재하지 않음
+
+
+
+    //7. 함수 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
 
 
-    // 5.2 요소개수의 변경이 가능한 유동적배열 : Collection [ List, Set, Map ]
+
+
+
+
 
 
 
