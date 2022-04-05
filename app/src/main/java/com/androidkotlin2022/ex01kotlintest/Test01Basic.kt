@@ -7,9 +7,10 @@ import kotlin.reflect.typeOf
 
 //문법적 주요 특징!!
 // A. 문장의 끝을 나타내는 ; 을 사용하지 않는다. 써도 에러는 아니지만 무시된다.
-// B. 변수를 만들 때 자료형을 먼저 명시하지 않고 var 키워드를 사용한다. 단, 자료형은 존재함. 자동 형변환 안됨. 즉, 정적타입 언어임.[자바스크립트와 다름]
+// B. 변수를 만들 때 자료형을 먼저 명시하지 않고 var,val 키워드를 사용한다. 단, 자료형은 존재함. 자동 형변환 안됨. 즉, 정적타입 언어임.[자바스크립트와 다름]
 // C. 코틀린은 함수형 언어다. 즉, 함수를 객체처럼 생각해서 변수에 저장하고 파라미터로 넘겨주는 등의 작업이 가능함. [객체지향프로그래밍 언어가 아님]
-// D. 안전하게 null 을 다룰수 있는 문법을 제공한다.
+// D. new 키워드 없이 객체를 생성함. new String() --> String()
+// E. 안전하게 null 을 다룰수 있는 문법을 제공한다.
 
 // #. 프로그램의 시작함수인 main함수가 반드시 있어야 함.
 // #. 함수를 정의할 때 리턴타입위치에 'fun'키워드(function의 약자) 사용
@@ -43,8 +44,8 @@ fun main(){
 
     //2. 자료형과 변수
     // * 코틀린 자료형의 종류
-    // Boolean, Byte, Char, Short, Int, Long, Float, Double  [기본적으로 Kotlin은 모든 변수가 객체임. 즉, 모두 참조변수임] -Boolean, String, Any, Char은 숫자타입[Number Type] 이 아님!!!
-    // String, Any(Java의 Object와 비슷), Unit ...  그외 Kotlin APIs, Java APIs
+    // 1) 기초 타입 : Boolean, Byte, Char, Short, Int, Long, Float, Double  [기본적으로 Kotlin은 모든 변수가 객체임. 즉, 모두 참조변수임] -Boolean, String, Any, Char은 숫자타입[Number Type] 이 아님!!!
+    // 2) 참조 타입 : String, Any(Java의 Object와 비슷), Unit ...  그외 Kotlin APIs, Java APIs
 
     // * 변수의 2가지 종류 : var, val  [ 문법 : var 변수명:자료형  or  val 변수명:자료형 ]
     // 2.1 var [ 값변경이 가능한 변수 ]
@@ -81,6 +82,11 @@ fun main(){
     println(num)
     println(num2)
     println()
+
+    //문자열 String 객체
+    var ssss1:String= "Hello"
+    //var ssss2:String= String("Hello") //error - 단순 "문자열" 객체를 생성할때 String()생성자를 사용할 수 없음.
+    //String() - String() 생성자는 Buffer나 byte 배열을 String객체로 생성할때만 사용함
 
 
 
@@ -271,6 +277,16 @@ fun main(){
     println()
 
 
+    //비트 연산자가 없음. 대신 비트연산자들에 대응하는 메소드가 있으며 가독성이 좋은 표기법도 제공함
+    //println( 7 | 3) //error - | ( OR 비트연산자) 없음
+    println( 7.or(3) ) // OR 비트연산에 대응하는 메소드가 Int 타입에 존재함
+    println( 7 or 3 )        // OR 메소드를 가독성 좋게 마치 연산자처럼 표기하는 것이 가능함.
+    println( true and false )
+    //println( 3.14 and 5.55 )    //error - Double 타입은 비트연산 안됨
+    //println( "aaa" or "bbb" )   //error - String 타입은 비트연산 안됨
+    println()
+
+
 
     //4. 제어문에서 특이한 점!!! //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // 코틀린의 제어문 종류 : if, when, while, for [ switch 문법이 없음 ]
@@ -405,7 +421,7 @@ fun main(){
 
 
     //6. 배열 Array ///////////////////////////////////////////////////////////////////////////////////////
-    // 6.1 요소개수의 변경이 불가능한 배열 : Array
+    // 6.1 요소개수의 변경이 불가능한 배열 : Array - 타입표시에 []가 없어짐.
     var arr= arrayOf(10,20,30)
     //요소값 출력
     println(arr[0])
@@ -505,6 +521,12 @@ fun main(){
     var arr5: IntArray
     arr5= intArrayOf(1,2,3)
 
+    //참조변수에 배열의 타입을 명시하기 - []표기는 없어짐
+    //var arrr:Int[] = arrayOf(10,20) //error
+    var arrr:Array<Int> = arrayOf(10,20) //Array타입을 명시할때는 반드시 <>제네릭을 표시해야함.
+    //var arrr2:Array<Int>= arrayOf(100,200) // <> 다음에 = 대입연산자를 곧바로 붙이면 에러. 띄어쓰기 필요
+
+
     //## boolean부터 Double까지의 기초 자료형들만 xxxArrayOf()가 존재함.. StringArrayOf()는 없음
 
     //배열의 요소값의 시작을 null값을 가진 배열 만들기 [길이:5]
@@ -532,7 +554,7 @@ fun main(){
 
     // 5.2.1 요소개수의 추가/삭제 및 변경이 불가능한 컬렉션 : listOf(), setOf(), mapOf()
     //1) List
-    val list:List<Int> = listOf(10,20,30,20) //중복데이터[20] 허용
+    val list:List<Int> = listOf(10,20,30,20) //중복데이터[20] 허용 [*주의* 제네릭 <> 타입에 = 대입연산자가 붙어 있으면 에러. 띄어쓰기 해야함.
     for( i in 0..2) {
         println( list.get(i) )
     }
